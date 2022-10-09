@@ -9,12 +9,12 @@ class GpioControllerImpl : public GpioController
 {
 public:
     GpioControllerImpl(std::shared_ptr<FileIo> fileIo, Direction direction, int pinNumber);
-    void Write(const std::string& value) const override;
+    void Write(PinValue value) const override;
     std::string Read() const override;
 private:
     std::shared_ptr<FileIo> fileIo;
     Direction direction;
-    int pinNumber;
+    std::string gpioPinPath;
 
 };
 
