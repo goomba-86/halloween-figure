@@ -12,6 +12,7 @@ enum class Direction
 class GpioController
 {
 public:
+    virtual ~GpioController() = default;
     virtual void Write(const std::string& value) const = 0;
     virtual std::string Read() const = 0;
 
