@@ -17,11 +17,13 @@ GpioControllerImpl::GpioControllerImpl(std::shared_ptr<FileIo> fileIo, Direction
 
 void GpioControllerImpl::Write(PinValue value) const
 {
+    auto pinValue = value == PinValue::High ? "1" : "0";
+    fileIo->Write(gpioPinPath + "/value", pinValue);
 }
 
 std::string GpioControllerImpl::Read() const
 {
-    return "";
+    return fileIo->Read(gpioPinPath + "/value");
 }
 
 
