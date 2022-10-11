@@ -4,14 +4,7 @@ GpioControllerImpl::GpioControllerImpl(std::shared_ptr<FileIo> fileIo, Direction
         fileIo(fileIo), direction(direction), gpioPinPath(gpioSysfsPath + "/gpio" + std::to_string(pinNumber))
 {
     fileIo->Write(gpioSysfsPath + "/export", std::to_string(pinNumber));  
-    if(direction == Direction::In)
-    {
-        fileIo->Write(gpioPinPath + "/direction", "in");
-    }
-    else
-    {
-        fileIo->Write(gpioPinPath + "/direction", "out");
-    }
+    SetDirection(direction);
 }
 
 
@@ -27,3 +20,14 @@ std::string GpioControllerImpl::Read() const
 }
 
 
+void GpioControllerImpl::SetDirection(Direction direction)
+{
+    if(direction == Direction::In)
+    {
+        fileIo->Write(gpioPinPath + "/direction", "in");
+    }
+    else
+    {
+        fileIo->Write(gpioPinPath + "/direction", "out");
+    }
+}

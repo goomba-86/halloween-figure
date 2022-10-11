@@ -11,6 +11,7 @@ public:
     GpioControllerImpl(std::shared_ptr<FileIo> fileIo, Direction direction, int pinNumber);
     void Write(PinValue value) const override;
     std::string Read() const override;
+    void SetDirection(Direction direction) override;
 private:
     std::shared_ptr<FileIo> fileIo;
     Direction direction;
