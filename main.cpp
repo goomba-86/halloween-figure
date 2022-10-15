@@ -1,12 +1,40 @@
 #include <iostream>
 #include <memory>
 #include "gpio-controller-impl.h"
+#include <iostream>
+#include <chrono>
+#include <thread>
 #include "file-io-impl.h"
+#include "stepper-motor.h"
+
+
+void Sleep(int millisencods);
 
 int main(int argc, char** argv)
 {
     auto fileIo = std::make_shared<FileIoImpl>();
-    auto gpioController = std::make_shared<GpioControllerImpl>(fileIo, Direction::Out, 10);
-    std::cout << "Hello, world!" << std::endl;
+    std::cout << "Moving started." << std::endl;
+    GpioControllerImpl pin1(fileIo, Direction::Out, 12);
+    GpioControllerImpl pin2(fileIo, Direction::Out, 16);
+    GpioControllerImpl pin3(fileIo, Direction::Out, 20);
+    GpioControllerImpl pin4(fileIo, Direction::Out, 21);
+    StepperMotor motor(pin1, pin2, pin3, pin4, 1);
+
+    std::cout << "Turn step." << std::endl;
+    motor.TurnSteps(1);
+    Sleep(500);
+    std::cout << "Turn 20 steps" << std::endl;
+    motor.TurnSteps(20);
+    Sleep(500);
+    std::cout << "Turn quarter turn" << std::endl;
+    motor.TurnDegrees(90);
+    std::cout << "Moving stopped" << std::endl;
     return 0;
+}
+
+
+
+void Sleep(int milliseconds)
+{
+    std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
 }
