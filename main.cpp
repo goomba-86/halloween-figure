@@ -18,21 +18,18 @@ int main(int argc, char** argv)
     GpioControllerImpl pin2(fileIo, Direction::Out, 16);
     GpioControllerImpl pin3(fileIo, Direction::Out, 20);
     GpioControllerImpl pin4(fileIo, Direction::Out, 21);
-    StepperMotor motor(pin1, pin2, pin3, pin4, 1);
+    StepperMotor motor(pin1, pin2, pin3, pin4, 5);
 
-    std::cout << "Turn step." << std::endl;
-    motor.TurnSteps(1);
-    Sleep(500);
-    std::cout << "Turn 20 steps" << std::endl;
-    motor.TurnSteps(20);
-    Sleep(500);
-    std::cout << "Turn quarter turn" << std::endl;
-    motor.TurnDegrees(90);
-    std::cout << "Moving stopped" << std::endl;
+
+    while(true)
+    {
+        motor.TurnDegrees(30);
+        Sleep(3000);
+        motor.TurnDegrees(-30);
+        Sleep(3000);
+    }
     return 0;
 }
-
-
 
 void Sleep(int milliseconds)
 {
