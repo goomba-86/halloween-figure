@@ -1,6 +1,7 @@
 #include "stepper-motor.h"
 #include <thread>
 #include <chrono>
+#include <cstdlib>
 
 StepperMotor::StepperMotor(GpioController& pin1, GpioController& pin2, GpioController& pin3, GpioController& pin4, int intervalMilliSeconds) : 
     pin1(pin1), pin2(pin2), pin3(pin3), pin4(pin4), intervalMilliSeconds(intervalMilliSeconds) 
@@ -17,24 +18,34 @@ StepperMotor::~StepperMotor()
 
 void StepperMotor::Turn(int count)
 {
-    for(int i = 0; i < count; i++)
+    if(count > 0)
     {
-        DoStep1();
-        DoStep2();
-        DoStep3();
-        DoStep4();
-        DoStep5();
-        DoStep6();
-        DoStep7();
-        DoStep8();
+        for(int i = 0; i < count; i++)
+        {
+            DoStep1();
+            DoStep2();
+            DoStep3();
+            DoStep4();
+            DoStep5();
+            DoStep6();
+            DoStep7();
+            DoStep8();
+        }
     }
-}
-
-void StepperMotor::TurnSteps(int steps)
-{
-    for(int i = 0; i < steps; i++)
+    else
     {
-        Turn(i);
+        count = abs(count);
+        for(int i = 0; i < count; i++)
+        {
+            DoStep8();
+            DoStep7();
+            DoStep6();
+            DoStep5();
+            DoStep4();
+            DoStep3();
+            DoStep2();
+            DoStep1();
+        }
     }
 }
 

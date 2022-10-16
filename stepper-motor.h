@@ -12,7 +12,6 @@ public:
     ~StepperMotor();
 
     void Turn(int count);
-    void TurnSteps(int count);
     void TurnDegrees(int degrees);
 
 private:
